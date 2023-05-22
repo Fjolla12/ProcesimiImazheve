@@ -1,0 +1,43 @@
+%Ngarkon paketen e nevojshme per perpunim te imazhit
+pkg load image
+
+%Lexon imazhin 'lena.tiff' dhe e konverton ne saktesi te dyfishte
+lena = imread('C:\Users\HP\Desktop\UP-Fjolla\Semestri 6\Procesimi i imazheve\Detyra 3\lena.tiff');
+lena = im2double(lena_img);
+
+%Krijon nje meshgrid per koordinatat x dhe y te imazhit 'lena.tiff'
+[x, y] = meshgrid(1:size(lena, 2), 1:size(lena, 1));
+
+%Percakton funksionin e zhurmes periodike duke perdorur formulen e dhene
+zhurma_periodike = 22 * cos((pi * x) / 3 + (pi * y) / 3) + 27 * sin((pi * x) / 2 + (pi * y) / 3);
+
+%Normalizon zhurmen periodike qe te perputhet me rangun e intensitetit te 'lena.tiff'
+zhurma_periodike = (zhurma_periodike - min(zhurma_periodike(:))) / (max(zhurma_periodike(:)) - min(zhurma_periodike(:)));
+
+%Shton zhurmen periodike ne imazhin 'lena.tiff'
+lena_zhurmeP = lena + zhurma_periodike;
+
+%Llogarit transformimin 2D Furier te imazhit te zhurmshem lena_zhurmeP
+lena_frTrans = fft2(lena_zhurmeP);
+
+%Vendos nje threshold per te bere zero komponentet me frekuence te larte ne transformimin Fourier
+threshold = 100;
+
+%Barazon me zero komponentet me frekuence me te larte se threshold i caktuar
+lena_frTrans(abs(lena_frTrans) > threshold) = 0;
+
+%Kryen transformimin e anasjellte te Furierit per te fituar imazhin me zhurme te larguar
+lena_paZhurme = real(ifft2(lena_frTrans));
+
+%Shfaqja e imazhit lena origjinal, me zhurme dhe pas hjekjes se zhurmes
+subplot(1, 3, 1);
+imshow(lena);
+title('Imazhi Origjinal');
+
+subplot(1, 3, 2);
+imshow(lena_zhurmeP);
+title('Imazhi me zhurme');
+
+subplot(1, 3, 3);
+imshow(lena_paZhurme);
+title('Imazhi pas heqjes se zhurmes');

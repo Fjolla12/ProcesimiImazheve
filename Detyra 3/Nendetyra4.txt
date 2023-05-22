@@ -1,0 +1,21 @@
+pkg load image
+
+% Lexon imazhin
+image = imread('C:\Users\HP\Desktop\UP-Fjolla\Semestri 6\Procesimi i imazheve\Detyra 3\figura 2.png');
+% Kthen ne imazh binar bardh dhe zi
+binaryImage = im2bw(image);
+
+% Definon elementin strukturor
+se = strel('square', 50);  % Elementi strukturor square me madhesi 3x3
+
+% Aplikon dilation
+dilatedImage = imdilate(binaryImage, se);
+
+% Shfaq imazhin origjinal dhe pas dilation
+subplot(1, 2, 1);
+imshow(binaryImage);
+title('Original Image');
+
+subplot(1, 2, 2);
+imshow(dilatedImage);
+title('Dilated Image');

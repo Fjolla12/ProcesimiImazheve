@@ -1,0 +1,117 @@
+ addpath('C:/Users/HP/');
+ [x, y] = meshgrid(-5:0.1:5, -5:0.1:5);
+ z = Gaussian(x, y, 1);
+ surf(x, y, z);
+
+
+
+ % Define the grid
+ [x, y] = meshgrid(-10:0.1:10);
+ % Calculate Laplacian of Gaussian
+ sigma = 1;
+ LoG = LaplacianOfGaussian(x, y, sigma);
+ % Visualize the surface
+ figure;
+ surf(x, y, LoG);
+ xlabel('x');
+ ylabel('y');
+ zlabel('LoG(x,y)');
+ title(sprintf('Laplacian of Gaussian with sigma = %d', sigma));
+
+
+
+
+% Load the image
+I = imread("C:/Users/HP/Downloads/cameraman.jpg");
+% Apply LoG filter with sigma = 1
+LoGImage  = LoGImage(I, 1);
+% Show image
+imshow(LoGImage);
+
+
+
+% Load the image
+I = imread("C:/Users/HP/Downloads/lenna.tiff");
+% Convert to grayscale
+gray_I = rgb2gray(I);
+
+
+% Apply the LoG filter with sigma 1
+LoGImage = LoGImage(gray_I, 1);
+% Creates an figure
+figure;
+% Divides the figure window into a 1x2 grid of subplots and sets the current subplot to the first one.
+subplot(1,2,1);
+% Shows gray_I image
+imshow(gray_I);
+% Captions that image
+title("Lena gray");
+% Sets the current subplot to the second one in the grid.
+subplot(1,2,2);
+% Shows LoGImage
+imshow(LoGImage);
+% Captions that image
+title("Lena LoG sigma = 1");
+
+
+
+% Apply the LoG filter with sigma 2
+LoGImage1 = LoGImage(gray_I, 2);
+% Creates an figure
+figure;
+% Divides the figure window into a 1x2 grid of subplots and sets the current subplot to the first one.
+subplot(1,2,1);
+% Shows gray_I image
+imshow(gray_I);
+% Captions that image
+title("Lena gray");
+% Sets the current subplot to the second one in the grid.
+subplot(1,2,2);
+% Shows LoGImage1
+imshow(LoGImage1);
+% Captions that image
+title("Lena LoG sigma = 2");
+
+% Apply the LoG filter with sigma 5
+LoGImage2 = LoGImage(gray_I, 5);
+% Creates an figure
+figure;
+% Divides the figure window into a 1x2 grid of subplots and sets the current subplot to the first one.
+subplot(1,2,1);
+% Shows gray_I image
+imshow(gray_I);
+% Captions that image
+title("Lena gray");
+% Sets the current subplot to the second one in the grid.
+subplot(1,2,2);
+% Shows LoGImage2
+imshow(LoGImage2);
+% Captions that image
+title("Lena LoG sigma = 5");
+
+
+% Apply the LoG filter with sigma 10
+LoGImage3 = LoGImage(gray_I, 10);
+% Creates an figure
+figure;
+% Divides the figure window into a 1x2 grid of subplots and sets the current subplot to the first one.
+subplot(1,2,1);
+% Shows gray_I image
+imshow(gray_I);
+% Captions that image
+title("Lena gray");
+% Sets the current subplot to the second one in the grid.
+subplot(1,2,2);
+% Shows LoGImage3
+imshow(LoGImage3);
+% Captions that image
+title("Lena LoG sigma = 10");
+
+%Create an 2x2 grid and put image in the first column, first row  
+subplot(2,2,1), imshow(LoGImage), title("Sigma = 1");
+% Puts the image in second column, first row
+subplot(2,2,2), imshow(LoGImage1), title("Sigma = 2");
+% Put image in the first column, second row 
+subplot(2,2,3), imshow(LoGImage2), title("Sigma = 5");
+% Put image in the second column, second row 
+subplot(2,2,4), imshow(LoGImage3), title("Sigma = 10");

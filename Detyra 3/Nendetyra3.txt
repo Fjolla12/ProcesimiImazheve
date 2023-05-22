@@ -1,0 +1,37 @@
+%Ngarkon paketen e nevojshme per perpunim te imazhit
+pkg load image
+
+%Lexon imazhin 'lena.tiff' dhe e konverton ne saktesi te dyfishte
+lena = imread('C:\Users\HP\Desktop\UP-Fjolla\Semestri 6\Procesimi i imazheve\Detyra 3\lena.tiff');
+lena = im2double(lena_img);
+
+%Merr madhesine e imazhit 'lena.tiff'
+[M, N, ~] = size(lena);
+
+%Percaktojme vlerat u0,v0 dhe D0
+u0 = 30;  
+v0 = 30;
+D0 = 100;   
+
+%Aplikojme transformimin 2D Furier ne imazhin 'lena.tiff'
+lena_frTrans = fft2(lena);
+
+%Llogarisim filterin Hg
+hg = Hg(M, N, u0, v0, Do);
+
+%Aplikojme filterin ne imazhin e transformuar
+lena_frTrans_filt = lena_frTrans .* hg;
+
+%Kryen transformimin e anasjellte te Furierit pa filter
+lena_paFilter = real(ifft2(lena_frTrans_filt));
+
+%Shfaq imazhet
+subplot(1, 3, 1);
+imshow(lena);
+title('Imazhi origjinal');
+subplot(1, 3, 2);
+imshow(abs(fftshift(hg)));
+title('Filteri');
+subplot(1, 3, 3);
+imshow(lena_paFilter);
+title('Imazhi pas hjekejes se filterit');
